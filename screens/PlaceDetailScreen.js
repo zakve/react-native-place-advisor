@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from "react-native";
 const PlaceDetailScreen = props => {
     return (
         <View>
-            <Text></Text>
+            <Text>Place detail screen</Text>
         </View>
     )
 }
