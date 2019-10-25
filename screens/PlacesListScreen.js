@@ -16,7 +16,7 @@ PlacesListScreen.navigationOptions = navData => {
         headerTitle: 'All places',
         headerRight: <HeaderButtons HeaderButtonComponent={HeaderButton}>
             <Item title='Add place'
-                iconName='favorite-border'
+                iconName='add'
                 onPress={() => {
                     navData.navigation.navigate('NewPlace')
                 }}
