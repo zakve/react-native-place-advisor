@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Input, Button, Text } from 'react-native-elements';
 
+import { useDispatch } from "react-redux";
+import * as placesActions from "../store/places-actions";
+
 const NewPlaceScreen = props => {
     const [titleValue, setTitleValue] = useState('');
+
+    const dispatch = useDispatch();
 
     const titleChangeHandler = text => {
         // add validation
@@ -11,7 +16,8 @@ const NewPlaceScreen = props => {
     }
 
     const savePlaceHandler = () => {
-
+        dispatch(placesActions.addPlace(titleValue));
+        props.navigation.goBack();
     }
 
     return (
