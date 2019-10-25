@@ -149,6 +149,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5445B32348C84A82B5CA6F1F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		5EBC2A8C57A9B5D3ABA3FE62 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -161,7 +168,6 @@
 				66D23857FBC50249A6F887C5 /* Pods-PlaceAdvisorTests.debug.xcconfig */,
 				62F8363DE4707D2F57010F55 /* Pods-PlaceAdvisorTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -181,6 +187,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				5EBC2A8C57A9B5D3ABA3FE62 /* Pods */,
+				5445B32348C84A82B5CA6F1F /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -286,7 +293,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 940;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -309,6 +316,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
