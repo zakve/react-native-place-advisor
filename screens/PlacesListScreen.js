@@ -15,7 +15,9 @@ PlacesListScreen.navigationOptions = navData => {
     return {
         headerTitle: 'All places',
         headerRight: <HeaderButtons HeaderButtonComponent={HeaderButton}>
-            <Item title='Add place'
+            <Item
+                title='Add place'
+                style={styles.icon}
                 iconName='add'
                 onPress={() => {
                     navData.navigation.navigate('NewPlace')
@@ -26,7 +28,9 @@ PlacesListScreen.navigationOptions = navData => {
 }
 
 const styles = StyleSheet.create({
-
+    icon: {
+        paddingHorizontal: 20
+    }
 })
 
 export default PlacesListScreen;
