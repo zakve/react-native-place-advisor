@@ -1,43 +1,66 @@
 import React from "react";
-import { View, Button, Text, StyleSheet } from "react-native";
+import { View, Button, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Colors from "../constants/Colors";
 
-import { RNCamera, FaceDetector } from 'react-native-camera';
+import ImagePickerP from 'react-native-image-picker';
 
 const ImagePicker = props => {
-    const takeImageHandler = () => { };
+    const options = {
+        title: 'Select Avatar',
+        customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+        storageOptions: {
+            skipBackup: true,
+            path: 'images',
+        },
+    };
+
+    const takeImageHanlder = () => {
+        ImagePickerP.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                const source = { uri: response.uri };
+
+                // You can also display the image using data:
+                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+                console.log('SOURCE: ' + source)
+            }
+        });
+    }
 
     return (
-        <View style={styles.imagePicker}>
-            <View style={styles.imagePreview}>
-                <Text>No image picked yet.</Text>
-                <Image style={styles.img} />
-            </View>
-            <Button
-                title="Take Image"
-                color={Colors.primary}
-                onPress={() => { takeImageHandler }} />
-        </View>
+        <Button onPress={takeImageHanlder} title='Choose image' />
     )
 }
 
+
 const styles = StyleSheet.create({
-    imagePicker: {
-        alignItems: 'center'
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: 'black',
     },
-    imagePreview: {
-        width: '100%',
-        height: 200,
-        marginBottom: 10,
-        justifyContent: 'center',
+    preview: {
+        flex: 1,
+        justifyContent: 'flex-end',
         alignItems: 'center',
-        borderColor: '#ccc',
-        borderWidth: 1
     },
-    image: {
-        width: '100%',
-        height: '100%'
-    }
+    capture: {
+        flex: 0,
+        backgroundColor: '#fff',
+        borderRadius: 5,
+        padding: 15,
+        paddingHorizontal: 20,
+        alignSelf: 'center',
+        margin: 20,
+    },
 });
 
 export default ImagePicker;
