@@ -2,6 +2,8 @@ import React from "react";
 import { View, Button, Text, StyleSheet } from "react-native";
 import Colors from "../constants/Colors";
 
+import { RNCamera, FaceDetector } from 'react-native-camera';
+
 const ImagePicker = props => {
     const takeImageHandler = () => { };
 
