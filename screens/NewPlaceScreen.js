@@ -23,7 +23,7 @@ const NewPlaceScreen = props => {
     }
 
     const dispatchPlace = useCallback(() => {
-        dispatch(placesActions.addPlace(titleValue));
+        dispatch(placesActions.addPlace(titleValue, pickedImage));
         props.navigation.goBack();
     }, [titleValue])
 
