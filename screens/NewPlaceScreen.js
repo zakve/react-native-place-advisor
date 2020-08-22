@@ -9,11 +9,13 @@ import { useDispatch } from "react-redux";
 import * as placesActions from "../store/places-actions";
 import Colors from '../constants/Colors';
 
-// import ImagePicker from "../components/ImagePicker";
+// components
+import EmptyState from '../components/EmptyState'
 
 const NewPlaceScreen = props => {
     const [titleValue, setTitleValue] = useState('');
     const [pickedImage, setPickedImage] = useState('');
+    const [pickedLocation, setPickedLocation] = useState('');
 
     const dispatch = useDispatch();
 
@@ -60,22 +62,16 @@ const NewPlaceScreen = props => {
         });
     }
 
-
-    const emptyState = <View style={styles.empty}>
-        <Icon
-            name='landscape'
-            size={60}
-            color={Colors.grey300}
-        />
-        <Text style={styles.emptyText}>No image picked yet.</Text>
-    </View>
+    const locationHandler = location => {
+        console.log('location pick')
+    }
 
     return (
         <ScrollView>
             <View style={styles.imagePicker}>
                 {
                     !pickedImage ?
-                        emptyState
+                        <EmptyState iconName='landscape' text='No image picked yet.' />
                         :
                         <ImageBackground source={{ uri: pickedImage }} style={styles.image} />
                 }
@@ -95,6 +91,16 @@ const NewPlaceScreen = props => {
                     inputContainerStyle={styles.placeNameContainer}
                     inputStyle={styles.placeName}
                 />
+                <View style={styles.locationPicker}>
+                    <EmptyState iconName='place' iconSize={50} text='No location picked yet.' />
+                    <Button
+                        title={pickedImage ? 'Change location' : 'Pick location'}
+                        titleStyle={styles.btn}
+                        buttonStyle={styles.buttonContainer}
+                        type='outline'
+                        onPress={locationHandler}
+                    />
+                </View>
             </View>
         </ScrollView>
     )
@@ -128,11 +134,14 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: Colors.grey50
     },
-    empty: {
-        marginVertical: 15
-    },
-    emptyText: {
-        color: Colors.grey300
+    locationPicker: {
+        width: '100%',
+        height: 200,
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: Colors.grey50
     },
     btn: {
         color: Colors.primary,
@@ -147,7 +156,8 @@ const styles = StyleSheet.create({
     },
     placeNameContainer: {
         borderBottomWidth: 0,
-        marginVertical: 10
+        marginVertical: 10,
+        marginBottom: 30
     },
     placeName: {
         fontSize: 28
