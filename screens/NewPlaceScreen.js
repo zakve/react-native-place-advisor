@@ -4,6 +4,7 @@ import { Input, Button, Text, Icon } from 'react-native-elements';
 import ImagePicker from 'react-native-image-picker';
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../components/HeaderButton";
+import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 
 import { useDispatch } from "react-redux";
 import * as placesActions from "../store/places-actions";
@@ -63,6 +64,34 @@ const NewPlaceScreen = props => {
     }
 
     const locationHandler = location => {
+        check(PERMISSIONS.IOS.LOCATION_ALWAYS)
+            .then((result) => {
+                switch (result) {
+                    case RESULTS.UNAVAILABLE:
+                        console.log(
+                            'This feature is not available (on this device / in this context)',
+                        );
+                        break;
+                    case RESULTS.DENIED:
+                        console.log(
+                            'The permission has not been requested / is denied but requestable',
+                        );
+                        request(PERMISSIONS.IOS.LOCATION_ALWAYS).then((result) => {
+                            console.log('request location')
+                            console.log(result)
+                        });
+                        break;
+                    case RESULTS.GRANTED:
+                        console.log('The permission is granted');
+                        break;
+                    case RESULTS.BLOCKED:
+                        console.log('The permission is denied and not requestable anymore');
+                        break;
+                }
+            })
+            .catch((error) => {
+                // …
+            });
         console.log('location pick')
     }
 
