@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, StyleSheet, ScrollView, ImageBackground } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { Input, Button, Text, Icon } from 'react-native-elements';
-import ImagePicker from 'react-native-image-picker';
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../components/HeaderButton";
 import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
@@ -12,6 +11,7 @@ import Colors from '../constants/Colors';
 
 // components
 import EmptyState from '../components/EmptyState'
+import ImagePick from "../components/ImagePick";
 
 const NewPlaceScreen = props => {
     const [titleValue, setTitleValue] = useState('');
@@ -33,35 +33,6 @@ const NewPlaceScreen = props => {
     useEffect(() => {
         props.navigation.setParams({ submitPlace: dispatchPlace })
     }, [dispatchPlace])
-
-    const takePictureHandler = picture => {
-        // More info on all the options is below in the API Reference... just some common use cases shown here
-        const options = {
-            title: 'Select Picture',
-            storageOptions: {
-                skipBackup: true,
-                path: 'images',
-            },
-        };
-
-        /**
-         * The first arg is the options object for customization (it can also be null or omitted for default options),
-         * The second arg is the callback which sends object: response (more info in the API Reference)
-         */
-        ImagePicker.showImagePicker(options, (response) => {
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-            } else {
-                // You can also display the image using data:
-                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-                setPickedImage(response.uri)
-            }
-        });
-    }
 
     const locationHandler = location => {
         check(PERMISSIONS.IOS.LOCATION_ALWAYS)
@@ -97,21 +68,10 @@ const NewPlaceScreen = props => {
 
     return (
         <ScrollView>
-            <View style={styles.imagePicker}>
-                {
-                    !pickedImage ?
-                        <EmptyState iconName='landscape' text='No image picked yet.' />
-                        :
-                        <ImageBackground source={{ uri: pickedImage }} style={styles.image} />
-                }
-                <Button
-                    title={pickedImage ? 'Change picture' : 'Take picture'}
-                    titleStyle={styles.btn}
-                    buttonStyle={styles.buttonContainer}
-                    type='outline'
-                    onPress={takePictureHandler}
-                />
-            </View>
+            <ImagePick
+                pickedImage={pickedImage}
+                setPickedImage={image => setPickedImage(image)}
+            />
             <View style={styles.form}>
                 <Input
                     placeholder='Place name'
@@ -155,14 +115,7 @@ const styles = StyleSheet.create({
     form: {
         marginHorizontal: 30
     },
-    imagePicker: {
-        width: '100%',
-        height: 300,
-        justifyContent: "center",
-        alignItems: "center",
-        borderBottomWidth: 1,
-        borderColor: Colors.grey50
-    },
+
     locationPicker: {
         width: '100%',
         height: 200,
@@ -172,17 +125,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderColor: Colors.grey50
     },
-    btn: {
-        color: Colors.primary,
-    },
-    buttonContainer: {
-        borderColor: Colors.primary
-    },
-    image: {
-        flex: 1,
-        width: '100%',
-        height: 300
-    },
+
     placeNameContainer: {
         borderBottomWidth: 0,
         marginVertical: 10,
