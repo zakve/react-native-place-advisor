@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Platform, Alert, ImageBackground } from 'react-native';
 import { Button } from 'react-native-elements';
 import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
+import Geolocation from 'react-native-geolocation-service';
 
 // Components
 import EmptyState from "./EmptyState";
@@ -11,6 +12,7 @@ import Colors from '../constants/Colors';
 
 
 const LocationPick = ({ pickedLocation, setPickedLocation }) => {
+
     const verifyPermissions = async () => {
         try {
             let result;
@@ -36,9 +38,11 @@ const LocationPick = ({ pickedLocation, setPickedLocation }) => {
                         'The permission has not been requested / is denied but requestable',
                     );
                     const req = await requestPermissions();
+                    return req;
                     break;
                 case RESULTS.GRANTED:
                     console.log('The permission is granted');
+                    return true;
                     break;
                 case RESULTS.BLOCKED:
                     console.log('The permission is denied and not requestable anymore');
@@ -90,25 +94,36 @@ const LocationPick = ({ pickedLocation, setPickedLocation }) => {
         }
     }
 
-    const locationHandler = async (location) => {
+    const locationHandler = async () => {
         const hasPermission = await verifyPermissions();
         if (!hasPermission) {
             return;
         }
 
-
+        const location = await Geolocation.getCurrentPosition(
+            (position) => {
+                setPickedLocation({ latitude: position.coords.latitude, longitude: position.coords.longitude })
+            },
+            (error) => {
+                // See error code charts below.
+                console.log(error.code, error.message);
+            },
+            { enableHighAccuracy: false, timeout: 5000 }
+        );
     }
 
     return (
         <View style={styles.locationPicker}>
-            <EmptyState iconName='place' iconSize={50} text='No location picked yet.' />
-            <Button
-                title={pickedLocation ? 'Change location' : 'Pick location'}
-                titleStyle={styles.btn}
-                buttonStyle={styles.buttonContainer}
-                type='outline'
-                onPress={locationHandler}
-            />
+            <View>
+                <EmptyState iconName='place' iconSize={50} text='No location picked yet.' />
+                <Button
+                    title={pickedLocation ? 'Change location' : 'Pick location'}
+                    titleStyle={styles.btn}
+                    buttonStyle={styles.buttonContainer}
+                    type='outline'
+                    onPress={locationHandler}
+                />
+            </View>
         </View>
     );
 };
