@@ -204,6 +204,8 @@ PODS:
     - React
   - react-native-image-picker (1.1.0):
     - React
+  - react-native-maps (0.27.1):
+    - React
   - react-native-sqlite-storage (5.0.0):
     - React
   - React-RCTActionSheet (0.61.2):
@@ -278,6 +280,7 @@ DEPENDENCIES:
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-geolocation-service (from `../node_modules/react-native-geolocation-service`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-sqlite-storage (from `../node_modules/react-native-sqlite-storage`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -346,6 +349,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-geolocation-service"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-maps:
+    :path: "../node_modules/react-native-maps"
   react-native-sqlite-storage:
     :path: "../node_modules/react-native-sqlite-storage"
   React-RCTActionSheet:
@@ -405,6 +410,7 @@ SPEC CHECKSUMS:
   react-native-camera: 3e52a28e4f437b566302e574bed0f77eeab3f737
   react-native-geolocation-service: 141e33bdb179bcba10b216ee13962611e21f2be4
   react-native-image-picker: 3637d63fef7e32a230141ab4660d3ceb773c824f
+  react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
   react-native-sqlite-storage: ce71689c5a73b79390a1ab213555ae80979a5dc7
   React-RCTActionSheet: 89b037c0fb7d2671607cb645760164e7e0c013f6
   React-RCTAnimation: e3cefa93c38c004c318f7ec04b883eb14b8b8235
