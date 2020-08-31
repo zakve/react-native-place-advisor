@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Platform, Alert, ImageBackground } from 'react-native';
+import { View, StyleSheet, Platform, Alert, ImageBackground, ActivityIndicator } from 'react-native';
 import { Button } from 'react-native-elements';
 import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service';
 
 // Components
 import EmptyState from "./EmptyState";
+import MapPreview from "./MapPreview";
 
 // Constants
 import Colors from '../constants/Colors';
 
 
 const LocationPick = ({ pickedLocation, setPickedLocation }) => {
+    const [isLoading, setIsLoading] = useState(false)
 
     const verifyPermissions = async () => {
         try {
@@ -95,6 +97,7 @@ const LocationPick = ({ pickedLocation, setPickedLocation }) => {
     }
 
     const locationHandler = async () => {
+        setIsLoading(true)
         const hasPermission = await verifyPermissions();
         if (!hasPermission) {
             return;
@@ -102,11 +105,13 @@ const LocationPick = ({ pickedLocation, setPickedLocation }) => {
 
         const location = await Geolocation.getCurrentPosition(
             (position) => {
-                setPickedLocation({ latitude: position.coords.latitude, longitude: position.coords.longitude })
+                setPickedLocation({ lat: position.coords.latitude, lng: position.coords.longitude })
+                setIsLoading(false)
             },
             (error) => {
                 // See error code charts below.
                 console.log(error.code, error.message);
+                setIsLoading(false)
             },
             { enableHighAccuracy: false, timeout: 5000 }
         );
@@ -115,7 +120,14 @@ const LocationPick = ({ pickedLocation, setPickedLocation }) => {
     return (
         <View style={styles.locationPicker}>
             <View>
-                <EmptyState iconName='place' iconSize={50} text='No location picked yet.' />
+                <MapPreview location={pickedLocation}>
+                    {
+                        isLoading ?
+                            <ActivityIndicator />
+                            :
+                            <EmptyState iconName='place' iconSize={50} text='No location picked yet.' />
+                    }
+                </MapPreview>
                 <Button
                     title={pickedLocation ? 'Change location' : 'Pick location'}
                     titleStyle={styles.btn}
