@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Platform, Alert, ImageBackground, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Platform, Alert, ActivityIndicator } from 'react-native';
 import { Button } from 'react-native-elements';
 import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service';
@@ -12,7 +12,7 @@ import MapPreview from "./MapPreview";
 import Colors from '../constants/Colors';
 
 
-const LocationPick = ({ pickedLocation, setPickedLocation }) => {
+const LocationPick = ({ pickedLocation, setPickedLocation, navigation }) => {
     const [isLoading, setIsLoading] = useState(false)
 
     const verifyPermissions = async () => {
@@ -97,24 +97,28 @@ const LocationPick = ({ pickedLocation, setPickedLocation }) => {
     }
 
     const locationHandler = async () => {
-        setIsLoading(true)
-        const hasPermission = await verifyPermissions();
-        if (!hasPermission) {
-            return;
-        }
+        if (pickedLocation) {
+            navigation.navigate('Map')
+        } else {
+            setIsLoading(true)
+            const hasPermission = await verifyPermissions();
+            if (!hasPermission) {
+                return;
+            }
 
-        const location = await Geolocation.getCurrentPosition(
-            (position) => {
-                setPickedLocation({ lat: position.coords.latitude, lng: position.coords.longitude })
-                setIsLoading(false)
-            },
-            (error) => {
-                // See error code charts below.
-                console.log(error.code, error.message);
-                setIsLoading(false)
-            },
-            { enableHighAccuracy: false, timeout: 5000 }
-        );
+            const location = await Geolocation.getCurrentPosition(
+                (position) => {
+                    setPickedLocation({ lat: position.coords.latitude, lng: position.coords.longitude })
+                    setIsLoading(false)
+                },
+                (error) => {
+                    // See error code charts below.
+                    console.log(error.code, error.message);
+                    setIsLoading(false)
+                },
+                { enableHighAccuracy: false, timeout: 5000 }
+            );
+        }
     }
 
     return (
@@ -141,33 +145,20 @@ const LocationPick = ({ pickedLocation, setPickedLocation }) => {
 };
 
 const styles = StyleSheet.create({
-    imagePicker: {
-        width: '100%',
-        height: 300,
-        justifyContent: "center",
-        alignItems: "center",
-        borderBottomWidth: 1,
-        borderColor: Colors.grey50
-    },
     btn: {
         color: Colors.primary,
     },
     buttonContainer: {
         borderColor: Colors.primary
     },
-    image: {
+    locationPicker: {
         flex: 1,
         width: '100%',
-        height: 300
-    },
-    locationPicker: {
-        width: '100%',
-        height: 200,
+        height: 340,
         justifyContent: "center",
         alignItems: "center",
-        borderWidth: 1,
-        borderRadius: 10,
-        borderColor: Colors.grey50
+        borderBottomWidth: 1,
+        borderColor: Colors.grey50,
     },
 });
 

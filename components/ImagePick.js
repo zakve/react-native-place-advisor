@@ -128,12 +128,13 @@ const ImagePick = ({ pickedImage, setPickedImage }) => {
 
 const styles = StyleSheet.create({
     imagePicker: {
-        width: '100%',
-        height: 300,
+        width: 200,
+        height: 200,
         justifyContent: "center",
         alignItems: "center",
-        borderBottomWidth: 1,
-        borderColor: Colors.grey50
+        borderWidth: 1,
+        borderColor: Colors.grey50,
+        marginBottom: 50
     },
     btn: {
         color: Colors.primary,
@@ -143,8 +144,8 @@ const styles = StyleSheet.create({
     },
     image: {
         flex: 1,
-        width: '100%',
-        height: 300
+        width: 200,
+        height: 200
     },
 });
 

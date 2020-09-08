@@ -38,10 +38,12 @@ const NewPlaceScreen = props => {
 
     return (
         <ScrollView>
-            <ImagePick
-                pickedImage={pickedImage}
-                setPickedImage={image => setPickedImage(image)}
+            <LocationPick
+                pickedLocation={pickedLocation}
+                setPickedLocation={location => setPickedLocation(location)}
+                navigation={props.navigation}
             />
+
             <View style={styles.form}>
                 <Input
                     placeholder='Place name'
@@ -50,9 +52,9 @@ const NewPlaceScreen = props => {
                     inputContainerStyle={styles.placeNameContainer}
                     inputStyle={styles.placeName}
                 />
-                <LocationPick
-                    pickedLocation={pickedLocation}
-                    setPickedLocation={location => setPickedLocation(location)}
+                <ImagePick
+                    pickedImage={pickedImage}
+                    setPickedImage={image => setPickedImage(image)}
                 />
             </View>
         </ScrollView>
@@ -81,8 +83,7 @@ const styles = StyleSheet.create({
     },
     placeNameContainer: {
         borderBottomWidth: 0,
-        marginVertical: 10,
-        marginBottom: 30
+        marginVertical: 30,
     },
     placeName: {
         fontSize: 28

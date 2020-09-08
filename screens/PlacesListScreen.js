@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Platform, FlatList } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../components/HeaderButton";
 import { useSelector, useDispatch } from "react-redux";
+import MapScreen from './MapScreen';
+
 
 import PlaceItem from "../components/PlaceItem";
 import * as placesActions from "../store/places-actions";
