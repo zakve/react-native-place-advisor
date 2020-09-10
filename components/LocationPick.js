@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Platform, Alert, ActivityIndicator } from 'react-native';
 import { Button } from 'react-native-elements';
 import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
@@ -14,6 +14,14 @@ import Colors from '../constants/Colors';
 
 const LocationPick = ({ pickedLocation, setPickedLocation, navigation }) => {
     const [isLoading, setIsLoading] = useState(false)
+
+    const mapPickedLocation = navigation.getParam('pickedLocation');
+
+    useEffect(() => {
+        if (mapPickedLocation) {
+            setPickedLocation(mapPickedLocation)
+        }
+    }, [mapPickedLocation])
 
     const verifyPermissions = async () => {
         try {

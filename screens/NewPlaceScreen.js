@@ -2,13 +2,13 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Input, Button } from 'react-native-elements';
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import HeaderButton from "../components/HeaderButton";
 
 import { useDispatch } from "react-redux";
 import * as placesActions from "../store/places-actions";
 import Colors from '../constants/Colors';
 
 // components
+import HeaderButton from "../components/HeaderButton";
 import EmptyState from '../components/EmptyState'
 import ImagePick from "../components/ImagePick";
 import LocationPick from '../components/LocationPick';
@@ -28,7 +28,7 @@ const NewPlaceScreen = props => {
     const dispatchPlace = useCallback(() => {
         dispatch(placesActions.addPlace(titleValue, pickedImage));
         props.navigation.goBack();
-    }, [titleValue])
+    }, [titleValue, pickedImage, pickedLocation])
 
     useEffect(() => {
         props.navigation.setParams({ submitPlace: dispatchPlace })
