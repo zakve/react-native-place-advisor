@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
             let places = []
             for (let i = 0; i < rows.length; i++) {
                 var place = rows.item(i);
-                places.push(new Place(place.id.toString(), place.title, place.imageUri))
+                places.push(new Place(place.id.toString(), place.title, place.imageUri, place.lat, place.lng))
             }
             return {
                 places: places
@@ -21,7 +21,9 @@ export default (state = initialState, action) => {
             const newPlace = new Place(
                 action.placeData.id.toString(),
                 action.placeData.title,
-                action.placeData.image
+                action.placeData.image,
+                action.placeData.coords.lat,
+                action.placeData.coords.lng,
             );
             return {
                 places: state.places.concat(newPlace)
