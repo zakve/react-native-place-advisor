@@ -6,7 +6,7 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 
 const MapPreview = (props) => {
-    const mapRegion = {
+    let mapRegion = {
         latitude: 37.32,
         longitude: -122.01,
         latitudeDelta: 0.0922,
@@ -17,9 +17,12 @@ const MapPreview = (props) => {
 
     if (props.location) {
         markerCoordinates = {
-            latitude: props.location.lat,
-            longitude: props.location.lng
+            latitude: parseInt(props.location.lat),
+            longitude: parseInt(props.location.lng)
         }
+
+        mapRegion.latitude = parseInt(props.location.lat);
+        mapRegion.longitude = parseInt(props.location.lng)
     }
 
     return <View>
