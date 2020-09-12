@@ -15,7 +15,7 @@ const db = SQLite.openDatabase(
 export const init = () => {
     const promise = new Promise((resolve, reject) => {
         db.transaction((tx) => {
-            tx.executeSql('CREATE TABLE IF NOT EXISTS places (id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, imageUri TEXT NOT NULL, address TEXT NOT NULL, lat REAL NOT NULL, lng REAL NOT NULL);',
+            tx.executeSql('CREATE TABLE IF NOT EXISTS places (id INTEGER PRIMARY KEY NOT NULL, title TEXT NOT NULL, imageUri TEXT NOT NULL, lat REAL NOT NULL, lng REAL NOT NULL);',
                 [],
                 (trans, results) => {
                     resolve()
@@ -29,11 +29,11 @@ export const init = () => {
     return promise;
 }
 
-export const insertPlace = (title, imageUri, address, lat, lng) => {
+export const insertPlace = (title, imageUri, lat, lng) => {
     const promise = new Promise((resolve, reject) => {
         db.transaction((tx) => {
-            tx.executeSql('INSERT INTO places (title, imageUri, address, lat, lng) VALUES (?, ?, ?, ?, ?)',
-                [title, imageUri, address, lat, lng],
+            tx.executeSql('INSERT INTO places (title, imageUri, lat, lng) VALUES (?, ?, ?, ?)',
+                [title, imageUri, lat, lng],
                 (trans, result) => {
                     resolve(result)
                 },

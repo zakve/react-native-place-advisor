@@ -23,9 +23,13 @@ const PlacesListScreen = props => {
                 data={places}
                 keyExtractor={item => item.id}
                 renderItem={itemData =>
-                    <PlaceItem image={itemData.item.imageUri} title={itemData.item.title} address={null} onSelect={() => {
-                        props.navigation.navigate('PlaceDetail', { placeTitle: itemData.item.title, placeId: itemData.item.id })
-                    }}
+                    <PlaceItem
+                        image={itemData.item.imageUri}
+                        title={itemData.item.title}
+                        address={`Lat ${itemData.item.lat}, Lng ${itemData.item.lng}`}
+                        onSelect={() => {
+                            props.navigation.navigate('PlaceDetail', { placeTitle: itemData.item.title, placeId: itemData.item.id })
+                        }}
                     />}
             />
         </View>
